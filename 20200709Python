@@ -1,0 +1,8 @@
+#파이썬 초 입력 후 시간, 분, 초로 나타내는 코드작성
+
+time = int(input("초를 입력하세요 >> "))
+hour = time//3600
+minute = time%3600//60
+second = time%60
+
+print("{}시 {}분 {}초 입니다.".format(hour, minute, second))
