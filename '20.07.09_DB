@@ -1,0 +1,198 @@
+C:\Users\joayo>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 목 7월 9 20:00:16 2020
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> quit
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+C:\Users\joayo>sqlplus/nolog
+
+SQL*Plus: Release 11.2.0.2.0 Production on 목 7월 9 20:01:01 2020
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> conn/as sysdba
+Connected.
+SQL> alter user system identified by 12345;
+
+User altered.
+
+SQL> alter user sys identified by 12345;
+
+User altered.
+
+SQL> quit
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+C:\Users\joayo>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 목 7월 9 20:05:08 2020
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> alter user hr account unlock identified by hr;
+
+User altered.
+
+SQL> conn hr/hr
+Connected.
+SQL> create table myai4;
+create table myai4
+                 *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+
+SQL> create table myai4(
+  2  num number,
+  3  name valchar2,
+  4  name valchar2,
+  5  )
+  6
+SQL> drop*from myai4;
+drop*from myai4
+    *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> create table myai4(
+  2  num number,
+  3  name valchar2(20),
+  4  tel valchar2(20),
+  5  hobby valchar2(1000)
+  6  )
+  7  ;
+name valchar2(20),
+             *
+ERROR at line 3:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table myai4(
+  2  num number,
+  3  name varchar2(20),
+  4  tel varchar2(20),
+  5  hobby varchar2(1000)
+  6  );
+
+Table created.
+
+SQL> insert into myai4 values(1,'홍길동','010-1234-5678','도술연습');
+
+1 row created.
+
+SQL> select * from myai4;
+
+       NUM NAME
+---------- ----------------------------------------
+TEL
+----------------------------------------
+HOBBY
+--------------------------------------------------------------------------------
+         1 홍길동
+010-1234-5678
+도술연습
+
+
+SQL> update myai4 set tel='010-1111-2222' where num=1;
+
+1 row updated.
+
+SQL> select * from myai4;
+
+       NUM NAME
+---------- ----------------------------------------
+TEL
+----------------------------------------
+HOBBY
+--------------------------------------------------------------------------------
+         1 홍길동
+010-1111-2222
+도술연습
+
+
+SQL> desc myai4;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NUM                                                NUMBER
+ NAME                                               VARCHAR2(20)
+ TEL                                                VARCHAR2(20)
+ HOBBY                                              VARCHAR2(1000)
+
+SQL> insert into myai4 values(2,'전사','010-2222-3333,'몽둥이스매싱');
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> insert into myai4 values(2,'전사','010-2222-3333','몽둥이스매싱');
+
+1 row created.
+
+SQL> insert into myai4 values(3,'궁수','010-3333-4444','사과맞추기');
+
+1 row created.
+
+SQL> insert into myai4 values(4,'법사','010-4444-5555','마법진그리기');
+
+1 row created.
+
+SQL> desc myai4;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NUM                                                NUMBER
+ NAME                                               VARCHAR2(20)
+ TEL                                                VARCHAR2(20)
+ HOBBY                                              VARCHAR2(1000)
+
+SQL> select * from myai4;
+
+       NUM NAME
+---------- ----------------------------------------
+TEL
+----------------------------------------
+HOBBY
+--------------------------------------------------------------------------------
+         1 홍길동
+010-1111-2222
+도술연습
+
+         2 전사
+010-2222-3333
+몽둥이스매싱
+
+       NUM NAME
+---------- ----------------------------------------
+TEL
+----------------------------------------
+HOBBY
+--------------------------------------------------------------------------------
+
+         3 궁수
+010-3333-4444
+사과맞추기
+
+         4 법사
+010-4444-5555
+
+       NUM NAME
+---------- ----------------------------------------
+TEL
+----------------------------------------
+HOBBY
+--------------------------------------------------------------------------------
+마법진그리기
