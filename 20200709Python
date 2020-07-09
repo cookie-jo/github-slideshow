@@ -1,0 +1,8 @@
+#Python time algorythm
+
+time = int(input("Please enter seconds >> "))
+hour = time//3600
+minute = time%3600//60
+second = time%60
+
+print("It's {}H {}M {}S.".format(hour, minute, second))
