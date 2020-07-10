@@ -1,0 +1,69 @@
+select * from jobs;
+
+select * from myai4;
+
+delete from myai4;
+--테이블을 삭제한다. 하이픈 두개는 주석
+drop table myai4;
+--SQL(DDL-데이터베이스정의언어, create, alter, drop)
+--table 생성
+create table myai4(
+num number not null, --필수입력항목
+name varchar2(20),
+tel varchar2(20),
+hobby varchar2(1000)
+);
+-- SQL(DML->데이터베이스조작언어, insert, select, update, delete)
+-- 데이터를 저장(insert)
+insert into myai4 values(1,'홍길동','010-1111-1111','음악감상');
+insert into myai4 values(2,'김길동','010-2222-2222','음악감상');
+insert into myai4 values(3,'나길동','010-3333-3333','유튜브');
+insert into myai4 values(4,'한길동','010-4444-4444','게임');
+insert into myai4 values(5,'박길동','010-5555-5555','공부');
+--데이터 불러오기(select)
+select * from myai4;
+
+-- 데이터를 삭제하기(delete)
+delete from myai4;
+
+-- 특정 레크도(행,row)지우기(조건절 : where)
+delete from myai4 where num > 3;  -- 이렇게 여러개를 지울수는 있습니다
+
+--데이터베이스 설계(Data Modeling)
+
+select * from employees;
+
+select count(*) as cnt from employees; --as cnt 나는 cnt 라는 이름을 쓰고싶다 as = alise별칭
+-- 1. first_name, last_name, salary만 출력
+
+select first_name, last_name, salary from employees;
+
+--2. 전체를 출력하시오(*)
+select * from employees;
+
+--3. 산술연산을 할 수 있다. (salary+300)더해서 출력(first_name, last_name, salary)
+select first_name, last_name, salary+300 as 급여 from employees;
+
+-- 관계연산자(>, >=, <, <=, ==, !=)
+--4. 급여가 10000 이상인 직원출력하시오.(first_name, last_name, salary)
+select first_name, last_name, salary from employees where salary>=20000;
+
+-- 5. salary가 10000~15000 사이의 직원을 출력하시오.(first_name, last_name, salary)
+--논리연산자(AND, OR, NOT)
+select first_name, last_name, salary from employees where salary>=10000 and salary<=150000;
+select first_name, last_name, salary from employees where salary between 10000 and 150000; 
+
+--6. 급여를 내림차순(desc)으로 정렬(order by 기준컬럼이름)하여 출력하시오.(first_name, last_name, salary)
+select first_name, last_name, salary from employees order by salary desc;
+select first_name, last_name, salary from employees order by salary asc;
+
+--7. 최대salary ?
+select max(salary) as max_salary from employees;
+
+--8. 최소salary?
+select min(salary) as min_salary from employees;
+
+--9. employees에서 중복을 제외하고(distinct) department_ID의 개수? 
+select count(distinct department_id) as cnt from employees;
+
+
