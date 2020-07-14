@@ -1,0 +1,112 @@
+-- 119 
+-- union 개수와 자료형이 같아야 연산이 됨
+select empno, ename, sal, deptno from emp where deptno = 10
+union
+select empno, ename, sal, deptno from emp where deptno = 20;
+
+--5-33
+select empno, ename, sal, deptno from emp where deptno = 10
+union
+select sal, job, deptno, sal from emp where deptno = 20;
+
+--5-34 union
+select empno, ename, sal, deptno from emp where deptno = 10
+union
+select empno, ename, sal, deptno from emp where deptno = 10;
+
+--5-35 union all
+select empno, ename, sal, deptno from emp where deptno = 10
+union all
+select empno, ename, sal, deptno from emp where deptno = 10;
+
+--5-36 minus
+select empno, ename, sal, deptno from emp
+minus
+select empno, ename, sal, deptno from emp where deptno = 10;
+
+--5-37 intersect
+select empno, ename, sal, deptno from emp
+intersect
+select empno, ename, sal, deptno from emp where deptno = 10;
+
+--count()
+
+--SQL
+--6-1
+select ename, upper(ename), lower(ename), initcap(ename) from emp;
+
+--6-2
+select * from emp where upper(ename) = upper('ford');
+-- 이름에 LL이 들어간 사람 찾기(like, 와일드 카드_%)
+select * from emp where upper(ename) like upper('%ll%');
+select * from emp where ename like '%LL%';
+
+select * from emp where lower(ename) like lower('%LL%');
+
+--132p
+--6-4
+select ename, length(ename) from emp;
+
+select ename, length(ename) from emp where length(ename) >= 5;
+
+--6-6
+select length('한글'), LENGTHB('한글') from dual;
+
+--6-7  #substr CLERK 12345 첫번째 인덱스에서 두글자
+select job, substr(job, 1, 2) from emp;
+select job, substr(job, 3, 2) from emp;
+select job, substr(job, 5) from emp;
+
+--6-8 문자열의 끝의 길이니까 마지막 글자만 나오게됨.
+select job, substr(job, length(job)) from emp;
+-- 이렇게 하면 -문자열부터 끝까지니까 전부 출력이됨.
+select job, substr(job, -length(job)) from emp;
+-- -문자열에서 2글자
+select job, substr(job, -length(job), 2) from emp;
+select job, substr(job, -3) from emp;
+
+--6-9 instr 왼쪽에서 오른쪽으로 L의 위치 찾기. 처음나온 L 3번째
+select instr('HELLO, ORACLE!', 'L') as instr_1 from dual; 
+--찾을 시작점의 위치가 5부터 시작해라 L을 찾아라
+select instr('HELLO, ORACLE!', 'L', 5) as instr_2 from dual; 
+--찾는 시작점의 위치가 2번째 부터 시작해서 2번째 L을 찾아라
+select instr('HELLO, ORACLE!', 'L', 2,2) as instr_3 from dual; 
+--사원이름에 S라는 문자가 포함된 모든 사원을 출력 => like
+select * from emp where ename like upper('%s%');
+--사원이름에 S가 있는 행 구하기 => instr
+select * from emp where instr(ename, 'S') > 0;
+
+--6-12 replace
+select '010-1234-5678' as replace_before from dual;
+select replace('010-1234-5678', '-', ' ') as replace_1 from dual;
+select replace('010-1234-5678', '-') as replace_1 from dual;
+
+--6-13 lpd, rpad 10자리를 만들고 #으로 채우고 Oracle 문자열 출력
+select lpad('Oracle', 10, '#') from dual;
+select rpad('Oracle', 10, '#') from dual;
+select lpad('Oracle', 10) from dual;
+
+--6-14 개인정보 노출하고싶지 않을 때 사용하면 유용함
+select rpad('700110-', '14', '*') as ssn from dual;
+select rpad('010-6524-', '13', '*') as tel from dual;
+
+--6-15 concat
+--empno:ename
+select concat(empno, ename) from emp;
+-- 딱붙어서 보기 힘드니 사이에 : 구분자를 넣자
+select concat(empno, concat(':',ename)) from emp;
+select empno || ':' || ename from emp;
+
+--6-16 trim 특정문자를 지우는 함수 일반적으로 공백지우는데 많이씀
+select '[' || trim(' _ _Oracle_ _ ')|| ']' as trim from  dual;
+select '[' || trim(leading from ' _ _Oracle_ _ ')|| ']' as trim_leading from  dual;
+select '[' || trim(trailing from ' _ _Oracle_ _ ')|| ']' as trim_trailing from  dual;
+select '[' || trim(both from ' _ _Oracle_ _ ')|| ']' as trim_both from  dual;
+
+--6-17 trim (삭제할 문자가 있을 때)
+select '[' || trim('-' from '--Oracle--')|| ']' as trim from  dual;
+
+--6-18
+select '[' || trim(' -Oracle- ') || ']' as trim from dual;
+select '[' || ltrim(' -Oracle- ') || ']' as trim from dual;
+select '[' || rtrim(' -Oracle- ') || ']' as trim from dual;
