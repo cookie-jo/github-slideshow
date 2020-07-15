@@ -1,0 +1,139 @@
+--200715DB 수업
+--146p(숫자함수)
+--6-19
+select round(1234.5678) as round from dual;
+select round(1234.5678,1) as round from dual;
+select round(1234.5678,2) as round from dual;
+select round(1234.5678,-1) as round from dual;
+select round(1234.5678,-2) as round from dual;
+
+--6-20
+select trunc(1234.5678) as trunc from dual;
+select trunc(1234.5678,1) as trunc from dual;
+select trunc(1234.5678,2) as trunc from dual;
+select trunc(1234.5678,-1) as trunc from dual;
+select trunc(1234.5678,-2) as trunc from dual;
+
+--1분 복습
+select trunc(1539.125023, 4) as trunc_ex1 from dual;
+select trunc(4586.89453, 2) as trunc_ex1 from dual;
+select trunc(2560.48522, -1) as trunc_ex1 from dual;
+select trunc(2560.48522) as trunc_ex1 from dual;
+
+--ceil, floor
+--6-21
+select ceil(3.14) from dual;
+select floor(3.14) from dual;
+select ceil(-3.14) from dual;
+select floor(-3.14) from dual;
+
+--6-22 mod
+select mod(15,6) from dual; --15/6 = 2...3 나머지를 구하는 함수 결괏값은 정수형태
+
+--6-23 날짜 sysdate
+select sysdate from dual;
+select sysdate as now,
+sysdate-1 as yesterday,
+sysdate+1 as tomorrow
+from dual;
+
+--여기서부터 대문자로 작성--
+
+--6-24 몇 개월 이후의 날짜
+SELECT SYSDATE, ADD_MONTHS(SYSDATE, 3) FROM DUAL;
+
+--입사 10주년이 되는 사원들의 데이터를 출력 120MONTH = 10YEAR
+SELECT EMPNO, ENAME, HIREDATE, ADD_MONTHS(HIREDATE, 120) AS WORK10YEAR FROM EMP;
+
+--6-26 ADD_MONTHS() 입사39년 미만인 사원데이터 출력 39YEAR = 468MONTH
+SELECT EMPNO, ENAME, HIREDATE, SYSDATE FROM EMP WHERE ADD_MONTHS(HIREDATE, 468) > SYSDATE;
+
+--MONTHS_BETWEEN() 두 날짜 간의 개월 수 차이를 구하는 함수
+SELECT EMPNO, ENAME, HIREDATE, SYSDATE,
+    MONTHS_BETWEEN(HIREDATE, SYSDATE) AS MONTHS1 FROM EMP;
+
+SELECT EMPNO, ENAME, HIREDATE, SYSDATE,
+    MONTHS_BETWEEN(SYSDATE, HIREDATE) AS MONTHS2 FROM EMP;
+
+SELECT EMPNO, ENAME, HIREDATE, SYSDATE,
+    TRUNC(MONTHS_BETWEEN(SYSDATE, HIREDATE)) AS MONTHS3 FROM EMP;
+    
+--NEXT_DAY 특정날짜를 기준으로 돌아오는 요일의 날짜 출력 
+SELECT SYSDATE, NEXT_DAY(SYSDATE, '월요일') FROM DUAL;
+SELECT SYSDATE, NEXT_DAY(SYSDATE, '금요일') FROM DUAL;
+SELECT SYSDATE, LAST_DAY(SYSDATE) FROM DUAL;
+SELECT SYSDATE, LAST_DAY('19/02/12') FROM DUAL;
+
+SELECT SYSDATE, ROUND(SYSDATE, 'CC') AS FORMAT_CC FROM DUAL;
+SELECT SYSDATE, ROUND(SYSDATE, 'YYYY') AS FORMAT_YYYY FROM DUAL; --*
+SELECT SYSDATE, ROUND(SYSDATE, 'Q') AS FORMAT_Q FROM DUAL; --*
+SELECT SYSDATE, ROUND(SYSDATE, 'DDD') AS FORMAT_DDD FROM DUAL; 
+SELECT SYSDATE, ROUND(SYSDATE, 'HH') AS FORMAT_HH FROM DUAL;
+
+--157P
+--6-31
+SELECT EMPNO, ENAME, EMPNO+'500' FROM EMP;
+
+--6-32
+SELECT EMPNO, ENAME, EMPNO+'ABC' FROM EMP;
+ 
+--6-33
+SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS') AS 현재날짜시간 FROM DUAL;
+
+--6-34
+SELECT SYSDATE, TO_CHAR(SYSDATE, 'MM') AS MM FROM DUAL;
+
+--6-35
+SELECT SYSDATE, TO_CHAR(SYSDATE, 'MON', 'NLS_DATE_LANGUAGE = ENGLISH') AS MON_ENGLISH FROM DUAL;
+
+--6-37
+SELECT SYSDATE, TO_CHAR(SYSDATE, 'HH24:MI:SS') FROM DUAL;
+
+--6-38
+SELECT SAL, TO_CHAR(SAL, '$999,999') AS SAL_$ FROM EMP;
+
+--6-41
+SELECT TO_NUMBER('1,300','999,999')-TO_NUMBER('1,500', '999,999') FROM DUAL;
+
+--6-42
+SELECT TO_DATE('2018-07-14', 'YYYY-MM-DD') AS YEAR1 FROM DUAL;
+
+--6-43
+SELECT * FROM EMP WHERE HIREDATE > TO_DATE('1981-06-01', 'YYYY/MM/DD');
+
+SELECT * FROM EMP WHERE HIREDATE > TO_DATE('1980-06-01', 'YYYY/MM/DD');
+
+--6-45 NVL NULL 처리함수 
+SELECT EMPNO, ENAME, SAL, NVL(COMM,0), SAL+NVL(COMM,0) FROM EMP;
+
+--6-46 NVL2 파이썬의 삼항연산자 같음.. NULL이 아니면 O  NULL 이면 X 출력
+SELECT EMPNO, ENAME, COMM, NVL2(COMM, 'O', 'X') FROM EMP;
+
+--6-47 DECODE, CASE  C언어 SWITCH CASE 문 같은 함수
+SELECT EMPNO, ENAME, JOB, SAL,
+    DECODE(JOB, 
+    'MANAGER', SAL*1.1,     --매니저는 봉급10%인상   
+    'SALESMAN', SAL*1.05,   --세일즈맨은 봉급5%인상
+    'ANALYST', SAL,        --애널리스트는 그대로
+    SAL*1.03) AS UPSAL          --나머지는 봉급 3%인상
+FROM EMP;
+
+
+--CASE
+SELECT EMPNO, ENAME, JOB, SAL,
+    CASE JOB
+        WHEN 'MANAGER' THEN SAL*1.1
+        WHEN 'SALESMAN' THEN SAL*1.05
+        WHEN 'ANALYST' THEN SAL
+        ELSE SAL*1.03        
+    END AS UPSAL
+    FROM EMP;
+
+--6-49
+SELECT EMPNO, ENAME, COMM,
+    CASE
+      WHEN COMM IS NULL THEN '해당사항 없음'
+      WHEN COMM = 0 THEN '수당 없음'
+      WHEN COMM > 0 THEN '수당 : '|| COMM
+    END AS COMM_TEXT
+FROM EMP;
