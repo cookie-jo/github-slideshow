@@ -1,0 +1,134 @@
+--7-5
+select count(*) from emp; --12행이라기 보다 직원이 12명이다 라고 의역해주기
+
+--7-6
+select count(*) from emp where deptno = 30;
+
+select * from emp;
+
+select avg(comm), sum(comm)/4 from emp; --그룹함수는 null 값을 무시함
+
+select comm from emp;
+
+select avg(nvl(comm,0)), sum(comm)/12 from emp;
+
+--select절 내에 그룹함수가avg(sal) 사용되었을 때 
+--그룹함수가 사용되지 않은 컬럼은 그룹화 시켜줘야(group by) 값이 출력됨
+--부서별 평균 급여를 출력하시오
+select deptno, avg(sal) from emp group by deptno
+
+--예제
+select deptno, job, avg(sal)
+from emp
+group by deptno, job
+order by 1
+
+--예제(오류)
+select deptno, job, avg(sal)
+from emp
+where avg(sal) > 20000 -- avg(sal)은 실제컬럼에 없어서 추후에 나온걸 where 절에는 쓸수가없음
+group by deptno, job
+order by 1
+
+--where(행)에 대한 조건절 having(그룹)에 대한 조건절
+select deptno, job, avg(sal)
+from emp
+having avg(sal) > 2000 -- having도 where과 같은 조건절이나, 그룹에대한 조건절임
+group by deptno, job
+order by 1
+
+--회사 전체의 최대 급여, 최소 급여, 급여 총 합 및 평균 급여 출력
+select * from emp;
+select MAX(sal), MIN(sal), SUM(sal), AVG(sal) from emp;
+--각 직업별 최대 급여, 최소 급여, 급여 총 합 및 평균 급여 출력
+select job, 
+MAX(sal)"최대 급여", 
+MIN(sal)"최소 급여", 
+SUM(sal)"급여 총 합", 
+trunc(AVG(sal))"평균 급여"
+from emp
+group by job
+order by job;
+-- 동일한 직업을 가진 사원들의 총 수
+select job, count(empno)
+from emp
+group by job
+order by job;
+
+select job, count(empno)
+from emp
+group by job
+order by job;
+
+--4. 매니저 MGR로 근무하는 사원들의 총 수
+select count(distinct MGR)
+from emp;
+
+--5. 사내 최대급여 및 최소 급여의 차이 출력
+ select max(sal)-min(sal) from emp;
+ 
+ --6.매니저의 사번 및 그 매니저 밑 사원들 중 최소급여를 받는 사원의 급여를 출력하시오
+ -- 매니저가 없는 사람들은 제외한다. where MGR is not null
+ -- 최소 급여가 5000미만인 경우는 제외한다 min(sal) >= 5000
+ -- 급여 기준 역순으로 조회한다 order by min(sal) desc;
+select mgr, min(sal)
+from emp
+where mgr is not null
+group by mgr
+having min(sal) >= 5000
+order by min(sal) desc;
+
+--회사에 근무하는 사원의 이름과 사원이 근무하는 부서이름을 출력하시오 Join
+--여러개의 테이블의 각 컬럼을 가져올 때 사용
+--이렇게 조인을 사용할 때 데이터베이스 내부에서는 어떤일이 발생하냐면
+--하나의 테이블로 합쳐버림. 테이블 dept + emp 컬럼deptno, dname, empno, deptno
+--무결성이 보장되어야 됨 (n-1)만큼의 조인 조건 작성  n은 조인을 시킬 테이블의 개수
+--카티션프로덕트(교차곱) 무결성이 보장되지않으면 가능한 모든 기능실행
+select ename, dname 
+from emp, dept
+
+--PK프라이머리 키  데이터무결성이 위배되지않게 FK(참조키) 사용하여 입력 막음.
+select ename, dname 
+from emp, 
+dept where emp.deptno=dept.deptno --조인조건을 사용해서 교차곱을 막는다
+
+--에러발생 deptno컬럼 때문 
+
+--Join 규칙
+--1. 테이블을 적는데 컬럼을 같이 적는다면 소유주이름.컬럼 해야 됨
+--2. (n-1)만큼의 조인 조건 작성  n은 조인을 시킬 테이블의 개수
+
+select e.ename, d.dname, e.deptno
+from emp e, dept d
+dept where e.deptno=d.deptno
+
+--Join성능을 향상시키는 방법 from절의 alais 기능 사용 및 소유주이름.컬럼 사용
+select e.ename, d.dname, e.deptno --3번실행
+from emp e, dept d --2번실행
+where e.deptno=d.deptno --1번실행 equ조인
+
+--프라이머리키와 포린키(참조)
+--PK - FK
+--equ = PK FK 같을때 사용
+--non-equ =
+--outer =
+--self = 
+
+select e.ename, d.dname, e.deptno
+from emp e, dept d
+where e.deptno = d.deptno
+
+--10번과 30번 부서에서 근무하는 사원 중 보너스를 받는 사원 이름과 사원이 근무하는 부서이름을 출력
+--일반조건과 조인조건은 and로 연결해야됨
+select e.ename, d.dname
+from emp e, dept d
+where e.deptno = d.deptno 
+and e.deptno in (10, 30)
+and e.comm is not null
+
+--카티션프로덕트(교차곱) 발생함
+select e.ename, d.dname
+from emp e, dept d
+where e.deptno = d.deptno 
+and e.deptno in (10, 30)
+or e.comm is not null
