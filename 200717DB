@@ -1,0 +1,122 @@
+-- 360p
+-- not null
+-- DDL(데이터 정의어)
+create table table_notnull(
+  login_id varchar2(20) not null,
+  login_pwd varchar2(20) not null,
+  tel varchar2(20)
+  );
+
+desc table_notnull;
+insert into table_notnull(login_id,login_pwd,tel)
+    values('test_id',1234,'010-1234-1234');
+
+select * from table_notnull;
+
+select * from user_constraints; --모든 제약조건을 관리하는 테이블
+
+--control 꾹 누르고 space 누르면 설명이 나옴
+create table table_notnull2(
+  login_id varchar2(20) constraint tblnn2_lgnid_nn not null,
+  login_pwd varchar2(20) constraint tblnn2_lgnpwd_nn not null,
+  tel varchar(20)
+  );
+
+--366
+alter table table_notnull
+    modify(tel not null);
+    
+update table_notnull set tel = '010-1004-1004'
+    where login_id='test_id_01';
+    
+alter table table_notnull2
+    modify(tel constraint tblnn_tel_nn not null);
+    
+select * from user_constraints;
+
+desc table_notnull2;
+
+create table table_unique(
+  login_id varchar2(20) unique,
+  login_pwd varchar2(20) not null,
+  tel varchar2(20)
+  );
+
+select * from user_constraints;
+
+desc table_notnull2;
+
+insert into table_unique(login_id,login_pwd,tel)
+    values('test_id_01','pwd01','010-1111-1111');
+    
+select * from table_unique;
+
+insert into table_unique(login_id,login_pwd,tel)
+    values('test_id_02','pwd01','010-1111-1112');
+    
+insert into table_unique(login_id,login_pwd,tel)
+    values(null,'pwd01','010-1111-1113');
+    
+update table_unique
+  set login_id='test_id_01'
+  where login_id is null;
+
+
+--377p 프라이머리 키 특징2가지 1.중복x, 2.Null x
+create table table_pk(
+  login_id varchar2(20) primary key, -- 열안에 제약조건 거는 것(기본적) 인라인 또는 열 레벨
+  login_pwd varchar2(20) not null,
+  tel varchar(20)
+  );
+
+desc table_pk;
+
+--PK로 만든 제약조건의 이름은 indexes 내에 관리된다.
+select * from user_constraints;
+select * from user_indexes;
+
+--379
+insert into table_pk(login_id,login_pwd,tel)
+    values('test_id_01','pwd01','010-1111-1111');
+--중복자체는 유니크 개념이기때문에 에러메세지가 unique constraint뜸
+
+insert into table_pk(login_id,login_pwd,tel)
+    values(null,'pwd01','010-1111-1111');
+-- PK는 중복x NULL값 x
+
+--아래 쪽에 제약조건을 거는 방식 = 아웃오브라인 또는 테이블 레벨
+create table table_name(
+  col1 varchar2(20),
+  col2 varchar2(20),
+  col3 varchar2(20),
+  primary key(col1),
+  constraint cons_name unique(col2)
+);
+
+select * from user_constraints
+    where table_name in ('EMP','DEPT'); --문자명은 대소문자 구분해야됨
+    
+---------------------------------------------------------------------    
+create table dept_fk(
+  deptno number(2) CONSTRAINT deptfk_deptno_pk primary key,
+  dname varchar2(14),
+  loc varchar2(13)
+);
+
+create table emp_fk(
+  empno number(4) CONSTRAINT empfk_empno_pk PRIMARY KEY,
+  ename varchar2(10),
+  job varchar2(9),
+  mgr number(4),
+  hiredate date,
+  sal number(7,2),
+  comm number(7,2),
+  deptno number(2)CONSTRAINT empfk_empno_fk REFERENCES dept_fk(deptno)
+);
+---------------------------------------------------------------------------
+
+insert into dept_fk VALUES(10, 'TEST_DNAME','TEST_LOC');
+select * from dept_fk;
+
+delete  from dept_fk where deptno=10;
+
