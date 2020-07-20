@@ -1,0 +1,103 @@
+-- 데이터 정의어 DDL (creat,e alter)
+
+select * from emp_rename;
+
+TRUNCATE table emp_rename; --전체를 삭제하고 복원
+rollback;
+
+drop table emp_rename;
+
+--266p(추가, 수정, 삭제,) - 데이터 조작어 (DML) 결과값을 테이블로만듦 = 복사가된다
+create table dept_temp
+  as select * from dept;
+
+drop table dept_table;
+
+select * from dept_temp;
+
+-- insert into -------- values 순서는 상관없고 열 이름이 중요하다
+insert into dept_temp(deptno, dname, loc)
+  values(50,'DATABASE','SEOUL');
+
+insert into dept_temp(deptno, dname, loc)
+  values(50,'DATABASE');
+  
+insert into dept_temp(deptno, dname, loc)
+  values(70,'WEB',null);
+
+select * from dept_temp;
+
+insert into dept_temp(deptno, dname, loc)
+  values(80,'WEB','');
+  
+insert into dept_temp(deptno, loc)
+  values(90,'INCHEON');
+  
+  
+-- emp 테이블의 구조만 복사(where 1<>1)하여 emp_temp 테이블을 생성하시오.
+create table emp_temp
+  as select * from emp
+  where 1<>1 ;
+  
+select * from emp_temp;
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+    values(9999, '홍길동', 'PRESIDENT', null, '2020/01/01', 5000, 1000, 10);
+
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+    values(1111, '성춘향', 'MANAGER', 9999, '2020-01-05', 4000, null, 20);
+
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+    values(2111, '이순신', 'MANAGER', 9999, to_date('07/01/2020','DD/MM/YYYY'), 4000, null, 20);
+
+--sysdate    
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+    values(2111, '심청이', 'MANAGER', 9999, sysdate, 4000, null, 30);    
+
+--서브쿼리
+insert into emp_temp(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+    select e.empno, e.ename, e.job, e.mgr, e.hiredate, e.sal, e.comm, e.deptno from emp E, salgrade S
+    where e.sal between s.losal and s.hisal and s.grade = 1;
+    
+select * from emp_temp;
+
+--277p (수정 - update)
+create table dept_temp2
+  as select * from dept;
+  
+select * from dept_temp2
+--update ..... set ..... where 
+
+update dept_temp2 set loc='SEOUL'
+    
+select * from dept_temp2;
+
+rollback; -- DCL, TCL(Transaction) all or nothing(전부 성공하거나 전부 실패햐아됨 ex 계좌이체)
+
+--1행만 바꾸기 where절 사용
+update dept_temp2 set dname ='database', loc ='seoul' where deptno=40; 
+
+--서브쿼리를 이용하여 여러열을 한번에 수정
+update dept_temp2 
+    set (dname, loc) = (select dname, loc from dept where deptno = 40 )
+where deptno =40;
+
+update dept_temp2 
+    set loc='seoul'
+where deptno=(select deptno from dept_temp2 where dname='OPERATIONS');
+
+--283
+
+create table emp_temp2
+  as select * from emp;
+
+select * from emp_temp2;
+-- delete ... where
+delete from emp_temp2 where job ='MANAGER';
+
+-- 10-24
+delete from emp_temp2
+  where empno in (select E.empno from emp_temp2 E, salgrade S 
+                    where e.sal between s.losal and s.hisal and s.grade=3 and deptno=30);
+                    
+ --group by, 조인(8) 서브쿼리(9)
+ 
