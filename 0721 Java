@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class Ex011 {
+	public static void main(String[] args) {
+		  //사람이름 입력하면 ____님 안녕하세요! 출력해주고싶다!
+	      //ex) 이은비 enter
+	      //     이은비님 안녕하세요!
+		
+		  //1. 입력한다. 
+		  //2. 입력한 이름을 기억한다.
+		  //3. 기억한 이름을 출력한다.
+
+		Scanner scan = new Scanner(System.in); //도구준비
+		System.out.println("이름을 입력해주세요!");
+		String name = scan.next(); //문자입력!! 숫자는?? => scan.nextInt()
+		System.out.println(name + "님 안녕하세요!");// append라고 함 + 써서 문장 붙여주면됨 
+		
+	}
+}
