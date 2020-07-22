@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+//main 입력 후 control + space + enter 하면 자동완성
+public class EX02 {
+	public static void main(String[] args) {
+		// 제곱 계산기
+		// 1. 숫자를 입력받는다.
+		// 2. 입력한 숫자(num)를 기억한다.
+		// 3. 숫자를 제곱(num * num)해서 출력한다.
+		System.out.println("숫자를 입력하세요 >> ");
+		Scanner scan = new Scanner(System.in);
+		int num = scan.nextInt();
+		// 데이터타입은 기본형(8개)과 참조형(4개?)이 있음.
+		// 참조형은 시작이 대문자임. Integer는 int의 참조형 버전임.
+		System.out.println(num + "의 제곱 : " + num*num);
+		
+		
+	}
+
+}
+// 줄맞춤 단축키 (단! 소스코드에 에러가있으면 안됨)
+// 1. ctrl + a => 전체선택
+// 2. ctrl + shift + f => 자동줄맞춤
+
+
+//자료형을 여러개 만들어둔 이유가 무엇?
+//저장공간의 낭비를 없애려고 ex)어플이나 게임만들때 메모리 점유율이 달라짐..!
+
+
+
+
+public class EX022 {
+	public static void main(String[] args) {
+		//자료형별 변수를 생성해보자!
+		//1. 논리형! (boolean)
+		boolean isRunning = true;
+		//2. 문자 (char)
+		char ch = 'A';
+	//	char ch = '안'; char는 문자형! 문자열은 String
+		
+		//3. 숫자 - 정수/실수(int)
+		int num = 3;
+		// num의 값을 8로 바꾸고 싶다....
+		num = 8;
+		//4. 숫자 - 실수(duouble) 
+		double num2 = 3.14;
+		
+		System.out.println(ch+num+num2);
+		
+	}
+
+}
