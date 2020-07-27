@@ -1,0 +1,65 @@
+
+public class Start {
+	//main -> 시작메소드(동작->기능)
+	public static void main(String[] args) {
+		//코딩 -> 프로그래밍의 3대요소(1.변수, 2.DataType(자료형), 3.할당(=)) 모든것은 여기에서 파생되어 나온다.
+		//                                     int, float, char, boolean : 기본자료형
+		//                                     문자열(String) - 사용자정의 자료형
+		//                                     책(Book) --> ? class 
+		//                                     Model의 종류 -> 1. DAO, 2.DTO, 3.Utilityx
+        // 데이터타입+변수 : 변수선언->기억공간(RAM)이 만들어진다.
+		int a;
+		a=10;
+		
+		int b =20;
+		
+		int c=0;
+		int d=c+11;
+		
+		System.out.println(d);
+		//float, char, boolean
+		
+		//3개의 정수를 저장할 [변수를 선언]하시오.
+		//1. 개별적으로 변수를 만들기
+		int x,y,z;
+		x=10; y=20; z=30;
+		int sum = x+y+z;
+		System.out.println("sum="+sum);
+		
+		
+		//2. 연속적으로 변수를 만들기(배열 -> Array)
+		//     객체(변수)
+		
+		//정수여러개 
+		int[] arr;
+		arr = new int[3]; // = 번지를 넣어라
+		arr[0]=10;
+		arr[1]=20;
+		arr[2]=30;
+		for(int i =0; i<arr.length; i++) {
+			System.out.println(arr[i]);
+		}
+
+		
+		//int[] arr = new int[3];
+		
+		//사용자 정의 자료형
+		//Book b; //내가 클래스를 만들수도있어야되고 
+		//String s; //만들어진 클래스를 쓸 수도 있어야함.
+		
+	}
+	public static void hap() {
+		
+	}
+	
+	
+}
+
+	/*public void hap()
+	메소드 하나 더 만들어서
+	메인메소드에서 호출 해서 동작시킴
+	
+	*/
+
+
+
