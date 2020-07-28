@@ -1,0 +1,25 @@
+
+public class Array01 {
+	
+	public static void main(String[] args) {
+		
+		//5행5열의 array 2차원 배열을 만들고 1~25까지 초기화
+		int[][] array = new int[5][5];
+		int cnt = 1;
+		
+		for(int i = 0; i<5;i++) {
+			for(int j = 0; j <5; j++) {
+				array[i][j] = cnt;
+				cnt++; // cnt += 1;
+			}
+		}
+		
+		for(int i = 0; i<5;i++) {
+			for(int j = 0; j <5; j++) {
+				System.out.print(array[i][j] + " ");
+			}
+			System.out.println();
+		}
+		
+	}
+}
