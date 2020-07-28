@@ -1,0 +1,23 @@
+
+public class OOP04 {
+
+	public static void main(String[] args) {
+
+		int i = 0;
+		int j = 0;
+
+		// 이중포문
+		for (i = 0; i < 5; i++) {
+			for (j = 0; j < 5; j++) {
+				if (j < i) { // i => 0 1 2 3 4
+					System.out.print(" ");
+				} else {
+					System.out.print("*");
+				}
+			}
+			System.out.println("");
+		}
+
+	}
+
+}
