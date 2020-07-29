@@ -1,0 +1,25 @@
+
+public class OOP12 {
+
+	public static void main(String[] args) {
+
+		int v = sum(100, 100);
+		System.out.println(v);
+
+		float vv = sum(45.6f, 67.8f);
+		System.out.println(vv);
+
+	}
+
+	// Method Overloading(중복정의)
+	// 매개변수로 2개의 정수를 받아서 합을 구하여 리턴하는 메서드를 정의
+	public static int sum(int x, int y) {
+		return x + y;
+	}
+
+	// 매개변수로 2개의 실수를 받아서 합을 구하여 리턴하는 메서드를 정의
+	public static float sum(float x, float y) {
+		return x + y;
+	}
+
+}
