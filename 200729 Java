@@ -1,0 +1,30 @@
+
+public class OOP11 {
+
+	public static void main(String[] args) { //메소드의 프로토타입
+		int kor = 78;
+		int eng = 91;
+		int mat = 88;
+		//총점 =? 메소드를 만들어서 풀어보자.
+		//배열 -> 묶어줄수있다. 변수 세개를 붙여서 번지 하나로 넘기기. 타입이 전부 동일함 int 배열로 묶자..
+		//만약, type 다르면 어떻게해야될까? class로 새로운 자료의 구조를 만들자. 이런 구조를 객체라고함.
+		
+		int[] jum = new int[3];
+		jum[0] = kor;
+		jum[1] = eng;
+		jum[2] = mat;
+		
+		hap(jum); //Method call => call by reference
+
+	}
+	public static void hap(int[] arr) { //int x, int y, int z ... 매개변수를 계속 나열하는 것 비효율적. //배열을 사용하면 어떨까?!
+		int sum =0;
+		for(int jum : arr) { //향상된 포문은 배열을 가지고 반복할때 사용.
+			sum+=jum;
+		}
+		System.out.println(sum);
+	}
+
+}
+
+//static개념은 객체생성과 관련된 단어. 이게없으면 실행자체가 안된다. 이후에 설명
