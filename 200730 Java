@@ -1,0 +1,81 @@
+package smhrd.book;
+// DTO = VO(Value object)
+// 회원 -> 이름, 나이, 몸무게, 키....
+public class MemberVO {
+	
+	//나이는 마음대로넣으면안되서 information hiding(정보은닉)!
+	//속성, 멤버변수, 상태정보
+	//객체를 설계 할때 상태정보들은 보호해야됨 => 1.정보은닉
+	//private으로 되어있는 멤버변수에 접근하기 위해서는 setter getter 한쌍의 메서드가 필요하다.
+	//1. 정보은닉
+	private String name;
+	private int age;
+	private float weight;
+	private String addr;
+	
+	//2. 매개변수가없는생성자는 default 생성자 = 명시적으로 만들것
+	//생성자메소드 = 1.객체 생성  2. 초기화
+	//this는 설계할때씀. 생략가능
+	//쓰든안쓰든 디폴트 생성자 만들어줄 것!	
+	//생성자 메소드는 기억공간 내부에서 동작함. 이때 메모리를 가리키는 this가 생성됨
+	
+	public MemberVO() { 
+		this.name = "나길동";
+		this.age = 26;
+		this.weight = 60.5f;
+		this.addr = "서울";
+	} 
+
+	//3. 매개변수 있는것은 생성자오버로딩(*)
+	public MemberVO(String name, int age, float weight, String addr) {
+		this.name = name;
+		this.age = age;
+		this.weight = weight;
+		this.addr = addr;
+	}
+	
+	//4. setter 값세팅 method 저장된 값 밖으로 내보냄
+	// 자동으로 만들 수 있다.
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	//if로 조건을 걸면 걸러낼 수 있다. 
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(float weight) {
+		this.weight = weight;
+	}
+
+	public String getAddr() {
+		return addr;
+	}
+
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	
+	//5. toString()메서드를 만들 것 -> 디버깅
+	@Override
+	public String toString() {
+		return "MemberVO [name=" + name + ", age=" + age + ", weight=" + weight + ", addr=" + addr + "]";
+	}
+	
+}
+//setter method private 걸었을 때 기억공간에 데이터를 넣어주고
+//getter method 데이터를 빼주는 기능.
+//이것들은 한쌍으로 있어야됨.
