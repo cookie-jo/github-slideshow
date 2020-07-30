@@ -1,0 +1,37 @@
+
+public class OOP24 {
+
+	public static void main(String[] args) {
+
+		String s = new String("명품자바@점프투파이썬@오라클@웹프로그래밍");
+		
+		
+		String[] sp = s.split("@");
+		for(String ss : sp) {
+			System.out.println(ss+"\t"+ss.length());
+			
+		}
+		// ------------------------------------
+		String str1 = new String("APPLE");
+		String str2 = new String("BEE");
+		int cmp = str1.compareTo(str2); // 양수 , 음수, Zero
+		System.out.println(cmp);
+		if(cmp==0) {
+			System.out.println("str1==str2");
+		}else if(cmp > 0) {
+			System.out.println("str1>str2");
+		}else {
+			System.out.println("str1<str2");
+		}
+		
+		//아스키 코드값으로 비교해서 양수가 나오면 앞에거가 크고 음수가 나오면 뒤에것이 크다로 해석 0이나온다면 같다.
+
+	}
+
+}
+/*
+명품자바 : 4
+점프투파이썬 : 6
+오라클 : 3
+웹프로그래밍 : 6
+*/
