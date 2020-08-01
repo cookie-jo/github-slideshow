@@ -1,0 +1,34 @@
+import smhrd.oop.Cat;
+import smhrd.oop.Dog;
+
+public class OOP44 {
+
+	public static void main(String[] args) {
+		// 객체(class)지향(중심)프로그래밍 -> 
+		// 3대특징(1.정보은닉, 2.상속(*), 3. 다형성(polymofizm)(******)객체지향의 꽃. 코드로 이해해야함..)
+		// Dog객체 생성
+		Dog d = new Dog("멍멍이", 3);
+		System.out.println(d);
+		
+		Cat c = new Cat("야옹이", 2);
+		System.out.println(c);
+	}
+
+}
+/*
+클래스 설계
+1. 수평적구조
+	개(Dog) - 고양이(Cat)
+	- 새로운 요구사항에는 유지보수가 어렵다.
+	- 코드가 중복이 많이 된다.
+	
+2. 수직적구조(상속) UML(Unified Modeling Language) 그림
+
+	[Animal]         상위 클래스 (super class)  부모      추상화, 포괄적, 일반화, 개념화
+	____|____
+	|		     |										                  계층
+   [Dog]  [Cat]		    하위클래스(sub class)  자식         구체화, 세분화, 파생,   구상화
+   
+   	
+
+*/
