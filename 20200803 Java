@@ -1,0 +1,25 @@
+import smhrd.oop1.A;
+import smhrd.oop1.B;
+
+public class OOP52 {
+
+	public static void main(String[] args) {
+		// Object -> 최상위 클래스(모든 클래스의 부모가 된다.)
+		A a =new A();
+		B b =new B();
+		disPtr(a);
+		disPtr(b);
+
+	}
+	//매개변수로 A, B클래스를 받아서 display() 메서드를 실행하는 [메서드를 정의=disPtr()]
+	//							다형성인수
+	public static void disPtr(Object obj) { //매개변수를 여러개 받는것은 비효율적. 메서드를 여러개 만들어서 오버로딩하는것도 비효율적.
+		if(obj instanceof A) { //중요한것은 Object로 뭔가 받으면 down casting을 거쳐서 자식에게 간다. 는 것을 알아야함.
+			((A)obj).display();
+		} else {
+			((B)obj).display();
+		}
+	}
+
+}
+//이걸 왜 하는것인가? 자바의 API를 쓰기 위해서 하는 것이다.
