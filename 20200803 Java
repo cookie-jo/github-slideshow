@@ -1,0 +1,26 @@
+import java.sql.*; // interface
+
+public class JDBC01 {
+	public static void main(String[] args) {
+		// 1.오라클 드라이버 클래스 로딩
+		// DriverMannager dm = new oracle.jdbc.driver.OracleDriver();
+		try { // 예외처리
+			Class.forName("oracle.jdbc.driver.OracleDriver"); // 드라이버를 메모리에 올리는 방법
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace(); // 에러를 프린트해주는 것,
+		}
+
+	}
+
+}
+/*
+ * jdbc JDBC Programming
+ * 
+ * [Java] --------------------------------------------[Oracle용API] 
+ *        -------------------[DataBase]------------------Oracle
+ * [Java]--interface ------[MySQL용API] ----------------- MySQL
+ *         -----------------[MS-SQL용API]-----------------MS-SQL 
+ *                                                         | 
+ *                                               Driver class(ojdbc6.jar)
+ * 
+ */
