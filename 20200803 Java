@@ -1,0 +1,26 @@
+import smhrd.oop1.A;
+import smhrd.oop1.B;
+import smhrd.oop1.ObjectArray;
+
+public class OOP54 {
+
+	public static void main(String[] args) {
+		// A, B을 [ObjectArray]를 이용해서 display()메서드를 실행시켜보자.
+		ObjectArray obj = new ObjectArray();
+		obj.add(new A()); // 클래스는 객체를 생성해서 넣어줘야함.
+		obj.add(new B());
+
+		for (int i = 0; i < obj.size(); i++) {
+			Object o = obj.get(i);
+			if( o instanceof A) {
+				((A)o).display();
+			}
+			else {
+				((B)o).display();
+			}
+		}
+		
+	}
+
+}
+//지금 하고있는게 뭐지.??
