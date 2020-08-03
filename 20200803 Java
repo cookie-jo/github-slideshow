@@ -1,0 +1,26 @@
+import java.util.ArrayList;
+
+import smhrd.oop1.A;
+import smhrd.oop1.B;
+
+public class OOP55 {
+
+	public static void main(String[] args) {
+		// A, B를 ArrayList에 저장하고 display()를 실행하는 코드를 작성
+
+		ArrayList<Object> list = new ArrayList<>();
+		list.add(new A());
+		list.add(new B()); //ArrayList의 장점. 여러개를 넣어도 됨.
+
+		for (int i = 0; i < list.size(); i++) {
+			Object o = list.get(i);//먼저 타입을 빼낸다음 오브젝트로 받고 조건문에 넣는게 내부연산속도 증가
+			if (o instanceof A) {
+				((A) o).display();
+			} else {
+				((B) o).display();
+			}
+		}
+
+	}
+
+}
