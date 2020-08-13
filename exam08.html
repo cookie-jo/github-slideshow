@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<!--form태그-->
+
+	<form>
+		<label for = "id">ID : </label>
+		<input type = "text" id = "id"><br>
+		
+		<label for = "pw">PW : </label>
+		<input type = "password" id = "pw">
+		
+		<!--선택 창-->
+		<select>
+			<option>아이유</option>
+			<option>박신혜</option>
+			<option>김고은</option>
+		</select>
+		
+		<input type = text list = list123>
+		
+		<!--자동완성창 같은 창-->
+		<datalist id = "list123">
+			<option>네이버</option>
+			<option>구글</option>
+			<option>다음</option>
+		</datalist><br>
+		
+		
+		축구 : <input type = "checkbox" name = "hobby">
+		야구 : <input type = "checkbox" name = "hobby">
+		농구 : <input type = "checkbox" name = "hobby">
+		
+		<br>
+		
+		<!--중복을 방지하는 radio 특성. name으로 묶어줘야함. 같은 묶음이라는 것을 알려줘야함.-->
+		남자 : <input type = "radio" name = "gender">
+		여자 : <input type = "radio" name = "gender">
+		
+		<input type = file>
+		
+		<input type = color>
+		
+		<!--정확한 수치 반환 : 나이를 입력한다고 했을 때 조건 지정가능-->
+		<input type = number min = 0 max = 100>
+		<!--대략적인 수치 반환 -->
+		<input type = range>
+		
+		<input type = date>
+		
+		<intput type = datetime-local>
+		
+		<textarea rows = 5 cols = "10"></textarea>
+		
+		<input type = reset>
+		<input type = submit value = "로그인">
+		
+		
+	</form>
+	
+</body>
+</html>
