@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+	
+	div{
+		border : 1px solid black; /*border값까지 합친 크기로 맞춰줘야함,*/
+	}
+	
+	/*크기마다 값을 바꿔줘야하는게 너무너무 귀찮음. 그럴 때는 퍼센트로 주면 부모만 바꾸면 자식들도 싹 다 바뀜*/
+	html, body, .layout{
+		width : 100%;
+		height : 100%;
+	}
+	.header, .footer{
+		width : 100%;
+		height : 15%;
+		box-sizing:border-box;
+	}
+	.side, .ad{
+		width : 20%;
+		height : 100%;
+		box-sizing:border-box;
+	}
+	.main{
+		width : 60%;
+		height : 100%;
+		box-sizing:border-box;
+	}
+	.container{
+		display : flex;
+		flex-direction : row-reverse;
+		height : 70%;
+		width : 100%;
+		box-sizing:border-box;
+	}
+			
+</style>
+
+</head>
+<body>
+	<div class = layout>
+		<div class = "header">header</div>
+		
+		<div class = container >
+			<div class = "side">side</div>
+			<div class = "main">main</div>
+			<div class = "ad">ad</div>
+		</div>
+		
+		<div class = "footer">footer</div>
+	</div>
+</body>
+</html>
