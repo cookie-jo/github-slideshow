@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+	.div1{
+		background-color : powderblue;
+		display : flex; 
+		/*flex-direction : row(기본값)*/
+		/*flex-direction : row-reverse;*/
+		/*flex-direction : column-reverse;*/
+		
+		
+/* 		flex-direction : row;
+		justify-content: flex-start;  x축 기준으로 이동. 기본값이라서 안써도 똑같은 모양임.*/
+		
+/*		justify-content: flex-end; row-reverse와는 순서가 다름.*/
+
+		/* justify-content: center; */
+		/* justify-content: space-between; */
+		/* justify-content: space-around; */
+		
+/* 		height : 200px;
+		align-items: center; y축 기준으로 이동
+		justify-content : center; */
+		
+		
+	}
+	.item{
+		background-color : tomato;
+		color : white;
+		border : 1px solid white;
+		/* flex-shrink:0; 사진이였을 때 짤리면 짤렸지 줄어들지 않게하는것.*/
+		flex-grow : 1;
+	}
+	
+	.item2{
+		
+		/* flex-basis: 200px; */
+		flex-grow : 3; /*전체 크기에서 차지하는 지분.*/
+	}
+	
+</style>
+</head>
+<body>
+<div class = "div1">
+
+	<div class = "item">1</div>
+	<div class = "item item2">2</div> <!--별명이 여러개 있을 수 있음.-->
+	<div class = "item">3</div>
+	<div class = "item">4</div>
+	<div class = "item">5</div>
+
+</div>
+</body>
+</html>

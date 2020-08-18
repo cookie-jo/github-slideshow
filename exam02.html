@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+<style type="text/css">
+	span {
+		display : none;
+	}
+	/*a태그에 hover가 된다면 후행span에 diplay : inline 해라.  */
+	a:hover + span{
+		display : inline;
+	}
+	
+</style>
+
+</head>
+<body>
+
+	<a href = "#">네이버</a>
+	<span class = naver>www.naver.com</span><br>
+	<a href = "#">다음</a>
+	<span class = daum>www.daum.net</span>
+
+</body>
+</html>
