@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+<%-- <%!%> 선언문 - 이 범위 안에 있으면 자바코드로 처리를 함.
+<% %> 스크립틀릿 - JSP에서 제일 많이 쓰임. 페이지에서 코드구현을 위해 사용함 
+<%=%> 표현식 --%>
+
+
+	<%!
+		public int sum(int num1, int num2){
+		int num3 = num1 + num2;
+		return num3;
+	}
+	%>
+
+	<%
+		int num1 = 1; 
+		int num2 = 2;
+		System.out.print(num1+num2);
+	
+	%>
+
+	<%=sum(num1, num2)%>		
+
+</body>
+</html>
