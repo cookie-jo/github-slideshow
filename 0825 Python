@@ -1,0 +1,138 @@
+# 파일을 읽어 오는 함수 -> read_csv() 
+# pandas 라이브러리
+
+import pandas as pd
+
+
+
+train = pd.read_csv("train.csv", index_col = "PassengerId")
+train
+
+
+
+
+#2. 가지고 온 데이터 살펴보기 -> 모양(행,열) shape, 내용()
+train.shape
+
+
+
+
+#head() -> 데이터의 상위 5개의 행을 가져오는 함수(안에 숫자 넣으면 그만큼 가져옴)
+train.head(7)
+
+
+
+
+#head() <-> tail() : 하위 5개의 행을 가져오는 함수
+train.tail(5)
+
+
+
+
+#데이터에 대한 전반적인 정보를 확인할 수 있는 함수 -> info() 정말 많이씀
+train.info()
+
+
+
+# 결측치를 확인하는 함수 -> isnull() <-> notnull()
+# isnull() 함수는 결측치에 대해서는 True를 결측이 아닌경우에는 False를 반환,
+print("Age의 결측 : ", train['Age'].isnull().sum())
+print("Embarked의 결측치 : ", train['Embarked'].isnull().sum())
+
+
+
+
+#승객중 성별에 따른 사망자와 생존자 수 확인하기
+#생존한 승객을 성별을 기준으로 찾기
+#loc[행,열]
+train[train['Survived']==1].loc[:,'Sex']
+
+
+
+#데이터의 값에 따른 갯수 구하는 함수 -> value_counts()
+#여성과 남성의 생존 수 구하기
+survived_1 = train[train['Survived']==1].loc[:,'Sex'].value_counts()
+
+
+
+#사망한 승객에 대한 성별 수 구하기
+survived_0 = train[train['Survived']==0].loc[:,'Sex'].value_counts()
+
+
+
+
+#인덱스가 "Survived"와 "dead" 이고 컬럼명이 "female"과 "male"인 데이터프레임 만들기
+#df = pd.DataFrame(데이터,인덱스)
+df1 = pd.DataFrame([survived_1, survived_0],
+                  index = ["Survived", "dead"],)
+                  
+                  
+
+
+#시각적으로 생존자와 사망자의 성별을 보여주기 위한 그래프 그리기
+import matplotlib.pyplot as plt
+
+
+
+
+#데이터프레임 객체를 그래프로 그리기위한 함수 -> plot(kind = 차트의종류)
+df.plot(kind="bar", stacked = False ,figsize = (8, 5))
+plt.title('Sex', fontsize=15)
+plt.show()
+
+# stacked = False -> 데이터의 수에 따라 나눠서 그래프를 생성 (생략 가능)
+# stacked = True -> 데이터들을 한줄에 쌓아서 그래프 생성
+
+
+
+
+# Pclass를 기준으로 사망/생존 인원수 구하기
+# 각각의 Pclass에 따라 인원수 파악하기
+train['Pclass'].value_counts()
+
+
+
+
+# Pclass를 기준으로 사망/생존 인원수 구하기 -> 데이터프레임으로 만들기
+# 1. 생존자 수 구하기
+survived_1 = train[train['Survived']==1].loc[:,'Pclass'].value_counts()
+# 2. 사망자 수 구하기
+survived_0 = train[train['Survived']==0].loc[:,'Pclass'].value_counts()
+# 3. 데이터프레임 만들기
+df2 = pd.DataFrame([survived_1,survived_0], index = ["Survive","dead"])
+
+
+
+
+#컬럼명 수정하기 -> colums= ['컬럼명', ['컬럼명']]
+df2.columns = ['Pclass1', 'Pclass2', 'Pclass3']
+
+
+
+
+# 원하는 속성을 가지고 생존자와 사망자에 대한 그래프를 그리는 함수 만들기
+# 모듈보다 메소드(함수)로 쓰기 위함. 그래서 이 메소드를 쓰려면 pandas 모듈 임포트해줘야함
+# 함수를 선언하는 키워드는 ? -> def()
+def bar_chart(column):
+    survived_1 = train[train['Survived']==1].loc[:, column].value_counts()
+    survived_0 = train[train['Survived']==0].loc[:, column].value_counts()
+    df = pd.DataFrame([survived_1,survived_0], index = ["Survived","dead"])
+    df.plot(kind="bar", figsize=(8,5))
+    plt.title(column)
+    plt.show()
+    
+    
+    
+    
+    
+# Age 결측치가 존재하는 'Age', 'Sex' 확인
+# 너무 어리거나 너무 나이가 많게 되면 데이터가 한쪽으로 치우치기 때문에
+# 각 성별의 중간값으로 결측치값 채워주기
+
+# fillna -> 결측치 값을 특정 데이터 값으로 지정을 해주는 함수
+# 성별에 따른 그룹을 만들어 주는 함수 -> groupby()
+train['Age'].fillna(train.groupby('Sex')['Age'].transform('median'))
+
+
+
+train.groupby('Sex').median()
