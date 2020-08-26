@@ -1,0 +1,69 @@
+<%@page import="java.net.URLEncoder"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<%
+		String id = request.getParameter("id");	
+		String pw = request.getParameter("pw");	
+		
+		String name = null;
+		
+		/*Java와 DB를 연결해주는 통로 코드작성. 이때 ojdbc.jar파일을 라이브러리에 넣어줘야함*/	
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		
+		/*보안카드*/
+		String db_url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String db_id = "hr";
+		String db_pw = "hr";
+		
+		/*Java와 SQL을 연결*/
+		/*자동완성으로 java.sql 임포트해줘야 오류가 안남!*/
+		Connection conn = DriverManager.getConnection(db_url, db_id, db_pw);
+	
+		String sql = "select * from member where id = ? and pw = ?"; 
+		PreparedStatement psmt = conn.prepareStatement(sql);
+		psmt.setString(1, id);
+		psmt.setString(2, pw);
+		
+		ResultSet rs = psmt.executeQuery();
+		
+		if(rs.next()){
+			name = rs.getString("name"); /*괄호 안에는 컬럼명 또는 name인덱스값 3을 입력해주면 됨*/
+			
+		}
+		/*닫는 순서는 여는 순서의 역순! 논리적으로 맞게 닫아줘야함.*/
+		
+		if(rs != null){
+			rs.close();
+		}
+		
+		if(psmt != null){
+			psmt.close();
+		}
+		
+		if(conn != null){
+			conn.close();
+		}
+		
+		if(name!= null){			/*loginSuccess.jsp로 갈때 쿼리스트링 넘어감 ?뒤에 name 한글은 인코딩해서 넘겨줘야함.*/
+			response.sendRedirect("loginSuccess.jsp?name="+URLEncoder.encode(name, "EUC-KR"));
+		}else{
+			response.sendRedirect("loginFail.jsp");
+		}
+		
+	%>
+
+
+</body>
+</html>
