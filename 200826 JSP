@@ -1,0 +1,64 @@
+<%@page import="java.sql.*" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<%
+		request.setCharacterEncoding("EUC-KR"); /*Post방식의 인코딩*/
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		String name = request.getParameter("name");
+	
+		/*Java와 DB를 연결해주는 통로 코드작성. 이때 ojdbc.jar파일을 라이브러리에 넣어줘야함*/	
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		
+		/*보안카드*/
+		String db_url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String db_id = "hr";
+		String db_pw = "hr";
+		
+		/*Java와 SQL을 연결*/
+		/*자동완성으로 java.sql 임포트해줘야 오류가 안남!*/
+		Connection conn = DriverManager.getConnection(db_url, db_id, db_pw);
+		
+		
+		String sql = "insert into member values(?,?,?)";
+		PreparedStatement psmt = conn.prepareStatement(sql);
+		psmt.setString(1, id);
+		psmt.setString(2, pw);
+		psmt.setString(3, name);
+		
+		
+		/*  문을 열어줬으면 닫아줘야함. 그런데 위에 conn이 열리지도 않았는데 닫으면 에러발생. 닫는데, 열려있다면 닫아라라고 해줘야됨. */
+		/* 	psmt.close(); 이렇게쓰면 오류.
+			conn.close(); 	 */	
+		int cnt = psmt.executeUpdate();
+			
+		if(psmt != null){
+			psmt.close();
+		}
+		if(conn != null){
+			conn.close();
+		}
+		
+		
+		if(cnt > 0){
+			System.out.print("회원가입 성공!");
+			response.sendRedirect("main.jsp");
+		}else{
+			System.out.print("회원가입 실패!");
+			response.sendRedirect("join.jsp");
+		}
+		
+
+	%>
+
+
+</body>
+</html>
