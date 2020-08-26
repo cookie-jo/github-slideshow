@@ -1,0 +1,91 @@
+# Age 결측치가 존재하는 'Age', 'Sex' 확인
+# 너무 어리거나 너무 나이가 많게 되면 데이터가 한쪽으로 치우치기 때문에
+# 각 성별의 중간값으로 결측치값 채워주기
+# fillna -> 결측치 값을 특정 데이터 값으로 지정을 해주는 함수
+# groupby() -> 그룹별 데이터 집계, 요약하는 함수
+# size(), sun(), mean(), median() : 중앙 값
+#0826 Python 
+import pandas as pd
+read
+
+train.groupby('Sex').size()
+
+
+
+# transform() -> groupby() 함수를 통해 통계된 값을 각 행별로 다시 저장해주는 함수
+train['Age'] = train['Age'].fillna(train.groupby('Sex')['Age'].transform('median'))
+
+
+train.groupby('Sex')['Age'].transform('median')
+
+
+
+#결측치 확인함수 isnull
+train[train.loc[:,'Age'].isnull()]
+
+
+
+# Age 카테고리화 만들기 -> cut()
+# pd.cut(데이터, 나누는 구간(bins), labels(구간의 이름))
+# bins -> 리스트의 형식으로 저장
+# labels -> 리스트의 형식으로 저장
+# 통상적으로 0~99세 까지 생각 -> 5개의 구간으로 나누기
+# 1~15 (미성년자=0), 16~25 (청년=1), 26~35(중년=2), 36~60(장년=3), 61~99(노년=4)
+
+bins = [0, 15, 25, 35, 60, 99]
+names = [0,1,2,3,4]
+
+# pd.cut() 사용해서 카테고리화 완성하기!
+train['Age'] = pd.cut(train.loc[:,'Age'],bins, labels=names)
+train.head(3)
+
+
+
+#Embarked 결측치 해결하기!
+# 결측치를 찾아 S라는 값 저장해주기
+train[train['Embarked'].isnull()]
+
+
+
+# 결측치를 찾아 S라는 값 저장해주기
+train['Embarked'] = train['Embarked'].fillna('S')
+
+
+
+train['Embarked'].value_counts()
+
+
+
+train.info()
+
+
+
+
+#문자로 되어있는 데이터들을 숫자로 맵핑해주기
+# 사람은 데이터를 분석할 때 문자로도 가능하지만
+# 컴퓨터는 0과 1처럼 숫자로 나누어져야 분석이 편함!
+
+
+# 성별에 대한 데이터 값을 female : 1, male : 2 로 맵핑하기
+train.loc[train['Sex']=='female', "Sex"] = 1
+train.loc[train['Sex']=='male', 'Sex'] = 2
+
+
+
+
+#Embarked의 값을 S = 0, C = 1, Q = 2 맵핑하기
+train.loc[train['Embarked']=='S', 'Embarked'] = 0
+train.loc[train['Embarked']=='C','Embarked' ] = 1
+train.loc[train['Embarked']=='Q','Embarked'] = 2
+
+
+
+
+# 데이터분석시 -> 주어진 데이터만 활용할 수 있지만,
+# 새롭게 데이터를 편집을 해서 특성에 활용할 수 도 있다.
+# FamilySize 라는 컬럼명을 추가하여 SibSp와 Parch, 자기자신을 포함한 가족 수 구하기
+
+train['FamilySize'] = train['SibSp']+train['Parch']+1
+
+
+
