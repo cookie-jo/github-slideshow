@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel = "stylesheet" href = "myCss1.css">
+</head>
+<body>
+	<div class = "red"></div>
+	<div class = "blue"></div>
+	<div class = "green"></div>
+	<div class = "gray"></div>
+</body>
+</html>
