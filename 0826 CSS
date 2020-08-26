@@ -1,0 +1,26 @@
+@charset "EUC-KR";
+
+ div{
+	width: 100px;
+	height: 100px;
+}
+
+.red{
+	background-color : red;
+	
+}
+
+.blue{
+	background-color : blue;
+	margin-left: 100px;
+}
+
+.green{
+	background-color : green;
+	margin-left: 200px;
+}
+
+.gray{
+	background-color : gray;
+	margin-left: 300px;
+}
