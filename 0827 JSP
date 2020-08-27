@@ -1,0 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+				<!--Servlet은 확장자가 필요없음-->
+	<form action = "JoinProgram" method = "post">
+		
+		ID : <input type = text name = "id"><br>
+		PW : <input type = text name = "pw"><br>
+		name : <input type = text name = "name"><br>
+		<input type = submit value = "회원가입">
+		
+	</form>
+
+</body>
+</html>
