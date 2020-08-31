@@ -1,0 +1,22 @@
+<%@page import="java.net.URLEncoder"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<%					//쿠키를 만들 때는 키값과 밸류값을 넣는다. cookie에서는 한글을 지원하지 않음. 인코딩시켜줘야함.
+		Cookie cookie = new Cookie("id", URLEncoder.encode("스마트미디어인재개발원", "UTF-8"));
+		//쿠키 유지시간 5초 생명주기 0을주면 소멸됨.
+		cookie.setMaxAge(5);
+		response.addCookie(cookie); //이제 이 정보를 받아갈 수 있음
+		
+		
+	%>
+
+</body>
+</html>
