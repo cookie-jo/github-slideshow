@@ -1,0 +1,43 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<%
+		//만들고
+	pageContext.setAttribute("page", "pageOK");
+	request.setAttribute("request", "requestOK");
+	session.setAttribute("session", "sessionOK");
+	application.setAttribute("application", "applicationOK");
+	
+	//얻어오고
+	String pageOK = (String)pageContext.getAttribute("page");
+	String requestOK = (String)request.getAttribute("request");
+	String sessionOK = (String)session.getAttribute("session");
+	String applicationOK = (String)application.getAttribute("application");
+	
+	%>
+
+	<% //옮기고
+		RequestDispatcher rd =request.getRequestDispatcher("scope02.jsp");
+		rd.forward(request, response); //이 표현문은 scope02의 request와 response객체를 쓰는것.
+	%>
+	
+	<%
+		System.out.print("안녕");
+	
+	%>
+
+	page : <%=pageOK %><br>
+	request : <%=requestOK %><br>
+	session : <%=sessionOK %><br>
+	application : <%=applicationOK %><br>
+
+
+</body>
+</html>
