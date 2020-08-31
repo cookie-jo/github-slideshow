@@ -1,0 +1,29 @@
+<%@page import="java.net.URLDecoder"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<%
+		//쿠키는 세션에 비해서 열악한 느낌..이 있음.
+		Cookie[] cookies = request.getCookies();
+	
+		for(int i = 0; i<cookies.length; i++){
+			
+			//cookies에 id 가져오면 smhrd key값과 value값
+			if(cookies[i].getName().equals("id")){
+				//URL에 올라간것은 16진법으로 되어있어서 Decoder로 다시 변환해줘야 제대로 출력이 됨.
+				out.print("value값 :" + URLDecoder.decode(cookies[i].getValue(), "UTF-8")+"<br>");
+				
+			}
+		}
+	
+	%>
+
+</body>
+</html>
