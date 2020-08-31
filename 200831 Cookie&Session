@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<%	
+		//세션만든걸 jsp에서 받아올 것임. session 객체 생성안해줘도 바로 되는 이유는 내장객체에 있음.
+		/*형변환으로 다운캐스팅해서 받아오던가 Object로 받던가 둘 중 하나 해야함.*/
+		String age = (String)session.getAttribute("age");
+	%>
+
+	<%=age %>
+
+</body>
+</html>
