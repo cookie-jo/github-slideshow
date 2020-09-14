@@ -1,0 +1,69 @@
+#모듈임포트
+from selenium import webdriver as wb            #selenium 모듈을 임포트  매크로 기능 사용
+from selenium.webdriver.common.keys import Keys
+import pandas as pd
+import requests as req
+from bs4 import BeautifulSoup as bs
+import time  # time 모듈을 임포트     지연시간 기능 사용
+
+
+# 한솥 전체메뉴 URL 가져오기
+url = 'https://www.hsd.co.kr/menu/menu_list'
+
+driver = wb.Chrome() #기본문법임.암기할것
+driver.get(url)
+
+
+# 메뉴 더보기 매크로작업
+btn_more = driver.find_element_by_class_name('c_05')
+
+try:
+    for index in range(100):
+        btn_more.click()
+        time.sleep(1)
+        
+except:
+    print(index)
+    
+    
+    
+url = 'https://www.hsd.co.kr/menu/menu_list'
+
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36'}
+
+res = req.get(url, headers = headers)
+#soup = bs(res.content, 'lxml') 
+soup = bs(driver.page_source, 'lxml')  
+
+
+name = soup.select('div.item-text > h4')
+name
+
+
+price = soup.select('div.item-price > strong')
+price
+
+
+#배열 생성 후 길이 만큼 반복하여 배열에 값을 넣어줌
+nums =[]
+names = []
+prices = []
+
+for index in range(len(name)):
+    nums.append(index+1)
+    names.append(name[index].text.strip())
+    prices.append(price[index].text.strip())
+    
+   
+item_info = {'num':nums, 'name':names, 'price':prices}
+
+
+item = pd.DataFrame(item_info)
+
+
+item.set_index('num', inplace = True)
+item
+
+
+item.to_csv('한솥.csv', encoding = "EUC-KR")
+
