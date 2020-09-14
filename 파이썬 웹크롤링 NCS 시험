@@ -1,0 +1,194 @@
+from selenium import webdriver as wb              # 셀레니움 모듈 = 매크로기능을 가진 모듈 크롬, 파이어폭스 같은 브라우저를 뛰울 때 쓰는 기능
+from selenium.webdriver.common.keys import Keys   # key 안에 있는 기능을 쓰기 위한 키모듈 임포트
+from bs4 import BeautifulSoup as bs
+import time
+import pandas as pd
+import requests as req
+
+
+###  Question2
+
+url = 'https://www.naver.com/'
+
+driver = wb.Chrome()
+driver.get(url)
+
+input_search = driver.find_element_by_id('query')
+input_search.send_keys("스마트미디어인재개발원")
+
+driver.find_element_by_id('search_btn').click()
+
+
+driver.find_element_by_css_selector('a > strong').click()
+
+
+### Question3
+
+url = 'https://movie.naver.com/movie/sdb/rank/rmovie.nhn'
+
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36'}
+
+res = req.get(url, headers = headers)
+
+soup = bs(res.content, 'lxml') # 파서 3가지 종류가 있고 lxml을 가장 많이씀.
+
+#BeautifulSoup 안에 기능이 있는데 그걸 사용하기위함.
+#대표적으로 .find_all 기능  .select 기능
+
+
+title = soup.select('div.tit3 > a')
+title
+
+ranks = []
+titles = []
+
+for index in range(len(title)):  #0~ 49 번 반복 = 50회 반복
+    ranks.append(index+1) 
+    titles.append(title[index].text.strip())
+
+titles
+
+movie_info = {'rank':ranks, 'title':titles}  #딕셔너리 형태
+
+
+movie_info 
+
+
+movie = pd.DataFrame(movie_info)
+movie
+
+
+movie.set_index('rank', inplace = True)
+
+
+movie
+
+
+
+### Question4
+
+url = 'https://front.wemakeprice.com/best'
+
+driver = wb.Chrome()
+driver.get(url)
+
+image_list = driver.find_elements_by_css_selector('div.item_img')
+
+image_list
+
+
+nums = []
+titles = []
+prices = []
+
+for index in range(10):
+    
+    #클릭해서 들어가기  
+    image_list = driver.find_elements_by_css_selector('div.item_img') #이미지를 다 담아서
+    
+    image_list[index].click() #인덱스로 돌리면 된다.
+    time.sleep(1)
+    
+    
+    #크롤링 및 전처리 #상품명, 가격정보
+    title = driver.find_element_by_class_name('deal_tit').text
+    price = driver.find_element_by_css_selector('strong.sale_price').text
+
+    # 배열에 정보를 담아주기
+    
+    nums.append(index+1)
+    titles.append(title)  #이 부분 title[index]로 담고있었는데 바로 담아주면 되네
+    prices.append(price) 
+
+    #나오기
+    driver.back() 
+    time.sleep(1)
+    
+
+nums
+    
+    
+titles
+    
+    
+prices
+    
+    
+
+item_info = {'num':nums, 'title':titles, 'price':prices}
+    
+    
+item = pd.DataFrame(item_info)
+item.set_index('num', inplace = True)
+item
+    
+    
+item.to_csv('위메프.csv', encoding = "EUC-KR")
+
+
+
+### Question4
+
+url = 'https://www.koreabaseball.com/TeamRank/TeamRank.aspx'
+
+driver = wb.Chrome()
+driver.get(url)
+
+
+soup = bs(driver.page_source, 'lxml')
+
+
+col = soup.select('table.tData > thead > tr > th', limit = 12)
+body = soup.select('table.tData > tbody > tr > td', limit = 120)
+
+
+col
+
+
+body
+
+
+cols = []
+for index in range(len(col)):
+    cols.append(col[index].text.strip())
+    
+
+
+cols
+
+
+bodys = []
+for index in range(len(body)):
+    bodys.append(body[index].text.strip())
+    
+    
+
+bodys
+
+
+import numpy as np
+
+bodys_array = np.array(bodys).reshape(-1,12)
+bodys_array
+
+
+df = pd.DataFrame(bodys_array, columns = cols)
+baseball = df.set_index('순위')
+
+
+baseball
+
+
+
+score = df.iloc[:, 0:7] #행, 열
+score
+
+
+score.to_csv('야구.csv', encoding="EUC-KR")
+
+
+
+
+
+
+
